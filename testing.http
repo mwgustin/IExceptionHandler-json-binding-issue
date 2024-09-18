@@ -1,0 +1,24 @@
+@HostAddress = http://localhost:5114
+
+###
+# Good message
+# Returns 200 always
+POST {{ HostAddress }}/test
+Content-Type: application/json
+
+{
+  "message": "test message"
+}
+
+###
+# Exception thrown inside the endpoint
+# Returns 200 in Development and Production
+GET {{ HostAddress }}/bad
+
+###
+# Bad json. Doesn't make it to the exception handler
+# Returns 200 in Development.  Returns 400 in Production.
+POST {{ HostAddress }}/test
+Content-Type: application/json
+
+"bad json"
